@@ -37,3 +37,29 @@ print (Clean_df[ 'Starting Median Salary'].min())
 print(Clean_df['Undergraduate Major'].loc[Clean_df[ 'Starting Median Salary'].idxmin()])
 
 print(Clean_df.loc[Clean_df['Mid-Career Median Salary']. idxmin()])
+
+#Lowest Risk Majors
+print(Clean_df['Mid-Career 90th Percentile Salary'] - Clean_df['Mid-Career 10th Percentile Salary'])
+
+#Inserting to dataframe
+spread_col = Clean_df['Mid-Career 90th Percentile Salary'] - Clean_df['Mid-Career 10th Percentile Salary']
+Clean_df.insert(1, 'Spread', spread_col)
+print(Clean_df.head())
+
+#Sorting by the Lowest Spread
+low_risk = Clean_df.sort_values('Spread')
+print(low_risk[['Undergraduate Major', 'Spread']].head())
+
+#Top five degrees with higest potential
+highest_potential = Clean_df.sort_values('Mid-Career 90th Percentile Salary', ascending=False)
+print(highest_potential[['Undergraduate Major', 'Mid-Career 90th Percentile Salary']].head())
+
+#Majors with the Greatest Spread in Salaries
+highest_spread = Clean_df.sort_values('Spread', ascending=False)
+print(highest_spread[['Undergraduate Major', 'Spread']].head())
+
+#grouping pivot data
+Clean_df.groupby('Group').count()
+
+#Number formats in the Output
+pd.options.display.float_format = '{:,.2f}'.format
